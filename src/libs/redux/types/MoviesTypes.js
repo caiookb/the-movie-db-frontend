@@ -1,0 +1,4 @@
+export const SAVE_MOVIES = "SAVE_MOVIES";
+export const SAVE_MOVIE_DETAIL = "SAVE_MOVIE_DETAIL";
+export const SAVE_MOVIES_BY_PAGE = "SAVE_MOVIES_BY_PAGE";
+export const CLEAN_MOVIES = "CLEAN_MOVIES";
