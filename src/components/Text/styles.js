@@ -23,6 +23,23 @@ export const StyledDate = styled.p`
 export const StyledText = styled.p`
   font-family: "Lato";
   font-size: 16px;
-  font-weight: 600;
+  font-weight: 500;
+  margin: 0;
+
   color: ${Colors.text};
+
+  ${(props) =>
+    props.color &&
+    css`
+      color: ${props.color};
+    `}
+
+  ${(props) =>
+    props.topic &&
+    css`
+      font-size: 20px;
+      font-family: "Abel";
+      font-weight: 600;
+      color: ${props.color};
+    `}
 `;

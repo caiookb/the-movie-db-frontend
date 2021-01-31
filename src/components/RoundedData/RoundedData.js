@@ -1,9 +1,9 @@
 import React from "react";
 import { StyledRoundedData } from "./styles";
 
-const RoundedData = ({ data, onClick, rating }) => {
+const RoundedData = ({ data, size, onClick, rating }) => {
   return (
-    <StyledRoundedData rating={rating} onClick={onClick}>
+    <StyledRoundedData rating={rating} size={size} onClick={onClick}>
       {data}
     </StyledRoundedData>
   );

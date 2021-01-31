@@ -23,11 +23,19 @@ export const StyledRoundedData = styled.div`
   ${(props) =>
     props.rating &&
     css`
-      color: ${props.color};
       font-size: 22px;
       border-radius: 50%;
       position: absolute;
       bottom: -35px;
       left: 15px;
+    `};
+
+  ${(props) =>
+    props.size === "lg" &&
+    css`
+      position: unset;
+      font-size: 32px;
+      font-weight: 300;
+      padding: 16px 12;px
     `};
 `;

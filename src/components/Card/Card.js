@@ -24,12 +24,14 @@ const Card = (props) => {
       overview,
       describedGenres,
     },
+    key,
+    onClick,
   } = props;
 
   const poster = `https://image.tmdb.org/t/p/w500${poster_path}`;
 
   return (
-    <StyledCard url={poster}>
+    <StyledCard url={poster} key={key} onClick={onClick}>
       <StyledImage src={poster} />
       <StyledInfo>
         <StyledInfoTitle>
@@ -47,8 +49,8 @@ const Card = (props) => {
           <Text text={overview} />
         </StyledOverview>
         <StyledTags>
-          {describedGenres?.map((genre) => (
-            <Tag tag={genre} />
+          {describedGenres?.map((genre, key) => (
+            <Tag tag={genre} key={key} />
           ))}
         </StyledTags>
       </StyledInfo>

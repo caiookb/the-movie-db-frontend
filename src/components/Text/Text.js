@@ -9,6 +9,8 @@ export const Date = ({ date, color }) => (
   <StyledDate color={color}>{date}</StyledDate>
 );
 
-export const Text = ({ text, color }) => (
-  <StyledText color={color}>{text}</StyledText>
+export const Text = ({ text, color, topic }) => (
+  <StyledText color={color} topic={topic}>
+    {text}
+  </StyledText>
 );
