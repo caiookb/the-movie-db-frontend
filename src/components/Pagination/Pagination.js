@@ -8,11 +8,12 @@ const Pagination = (props) => {
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
 
-  const data = [...list];
+  const data = list && [...list];
 
   const splicePages = [...Array(Math.ceil(data?.length / 5 || 1))].map((_) => {
     return data?.splice(0, 5);
   });
+
   const pagesLength = Array.from(
     { length: splicePages?.length || 1 },
     (v, k) => k + 1
@@ -29,10 +30,12 @@ const Pagination = (props) => {
     });
   }, [currentPage]);
 
-  useEffect(() => paginateItems(splicePages[currentPage]), [items]);
+  useEffect(() => paginateItems && paginateItems(splicePages[currentPage]), [
+    items,
+  ]);
 
   return (
-    <StyledPagination>
+    <StyledPagination data-testid="pagination">
       {pages.map((page, idx) => (
         <StyledPage
           current={page - 1 === currentPage}
