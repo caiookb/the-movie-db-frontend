@@ -64,57 +64,65 @@ const DetailedCard = (props) => {
 
   const poster = `https://image.tmdb.org/t/p/w500${poster_path}`;
 
-  return title ? (
-    <StyledDetail>
-      <StyledDetailedCard url={poster}>
-        <StyledInfoTitle>
-          <StyledTitle>
-            <Title title={title} color={Colors.primary} />
-          </StyledTitle>
-          <StyledDate>
-            <Date date={moment(release_date).format("DD/MM/YYYY")} />
-          </StyledDate>
-        </StyledInfoTitle>
-        <StyledOverview>
-          <StyledInfo>
-            <StyledTopic>
-              <StyledTopicTitle>
-                <Text text={"Sinopse"} color={Colors.fourth} topic={true} />
-              </StyledTopicTitle>
-              <Text text={overview} color={Colors.text2} />
-            </StyledTopic>
-            <StyledTopic>
-              <StyledTopicTitle>
-                <Text text={"Informações"} color={Colors.fourth} topic={true} />
-              </StyledTopicTitle>
-              <StyledRow>
-                {specificInfos?.map((info) => (
-                  <Info title={info.title} value={info.value} />
-                ))}
-              </StyledRow>
-            </StyledTopic>
-            <StyledRow>
-              <StyledTags>
-                {genres?.map((genre) => (
-                  <Tag tag={genre.name} />
-                ))}
-              </StyledTags>
-              <StyledRoundedData>
-                <RoundedData
-                  size={"lg"}
-                  data={`${vote_average * 10}%`}
-                  rating={true}
-                />
-              </StyledRoundedData>
-            </StyledRow>
-          </StyledInfo>
-          <StyledImage src={poster} />
-        </StyledOverview>
-      </StyledDetailedCard>
-      <Video url={video} />
+  return (
+    <StyledDetail data-testid={"detailed-card"}>
+      {title ? (
+        <>
+          <StyledDetailedCard url={poster}>
+            <StyledInfoTitle>
+              <StyledTitle>
+                <Title title={title} color={Colors.primary} />
+              </StyledTitle>
+              <StyledDate>
+                <Date date={moment(release_date).format("DD/MM/YYYY")} />
+              </StyledDate>
+            </StyledInfoTitle>
+            <StyledOverview>
+              <StyledInfo>
+                <StyledTopic>
+                  <StyledTopicTitle>
+                    <Text text={"Sinopse"} color={Colors.fourth} topic={true} />
+                  </StyledTopicTitle>
+                  <Text text={overview} color={Colors.text2} />
+                </StyledTopic>
+                <StyledTopic>
+                  <StyledTopicTitle>
+                    <Text
+                      text={"Informações"}
+                      color={Colors.fourth}
+                      topic={true}
+                    />
+                  </StyledTopicTitle>
+                  <StyledRow>
+                    {specificInfos?.map((info) => (
+                      <Info title={info.title} value={info.value} />
+                    ))}
+                  </StyledRow>
+                </StyledTopic>
+                <StyledRow>
+                  <StyledTags>
+                    {genres?.map((genre) => (
+                      <Tag tag={genre.name} />
+                    ))}
+                  </StyledTags>
+                  <StyledRoundedData>
+                    <RoundedData
+                      size={"lg"}
+                      data={`${vote_average * 10}%`}
+                      rating={true}
+                    />
+                  </StyledRoundedData>
+                </StyledRow>
+              </StyledInfo>
+              <StyledImage src={poster} />
+            </StyledOverview>
+          </StyledDetailedCard>
+          <Video url={video} />
+        </>
+      ) : (
+        <Spinner />
+      )}
     </StyledDetail>
-  ) : (
-    <Spinner />
   );
 };
 

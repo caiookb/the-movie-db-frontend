@@ -2,7 +2,7 @@ import React from "react";
 import styled, { keyframes } from "styled-components";
 import { Colors } from "../../utils/Colors";
 
-const Spinner = () => <StyledSpinner></StyledSpinner>;
+const Spinner = () => <StyledSpinner data-testid="spinner"></StyledSpinner>;
 
 const spin = keyframes`
   0% {

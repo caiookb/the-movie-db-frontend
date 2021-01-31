@@ -2,7 +2,7 @@ import React from "react";
 import { StyledTag } from "./styles";
 
 const Tag = ({ tag, key }) => (
-  <StyledTag key={key} tag={tag}>
+  <StyledTag key={key} tag={tag} data-testid="tag">
     {tag}
   </StyledTag>
 );

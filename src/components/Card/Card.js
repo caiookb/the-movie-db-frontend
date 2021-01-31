@@ -15,23 +15,19 @@ import {
 } from "./styles";
 
 const Card = (props) => {
-  const {
-    movie: {
-      title,
-      vote_average,
-      release_date,
-      poster_path,
-      overview,
-      describedGenres,
-    },
-    key,
-    onClick,
-  } = props;
+  const title = props.movie?.title;
+  const vote_average = props.movie?.vote_average;
+  const release_date = props.movie?.release_date;
+  const poster_path = props.movie?.poster_path;
+  const overview = props.movie?.overview;
+  const describedGenres = props.movie?.describedGenres;
+
+  const { key, onClick } = props;
 
   const poster = `https://image.tmdb.org/t/p/w500${poster_path}`;
 
   return (
-    <StyledCard url={poster} key={key} onClick={onClick}>
+    <StyledCard url={poster} key={key} onClick={onClick} data-testid={"card"}>
       <StyledImage src={poster} />
       <StyledInfo>
         <StyledInfoTitle>
