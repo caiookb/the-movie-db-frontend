@@ -14,6 +14,7 @@ const Main = (props) => {
     moviesList,
     paginateItems,
     history,
+    updateListOnRedux,
   } = props;
 
   const [isFetching, setFetching] = useState(false);
@@ -33,6 +34,7 @@ const Main = (props) => {
   };
 
   useEffect(() => {
+    updateListOnRedux();
     clearMovieDetail();
   }, []);
 
@@ -77,6 +79,7 @@ const mapDispatchToProps = (dispatch) => {
     searchMovies: (name) => dispatch(MoviesController.searchMovie(name)),
     selectMovie: (movie) => dispatch(MoviesController.selectedMovieCard(movie)),
     paginateItems: (list) => dispatch(MoviesController.paginateMovies(list)),
+    updateListOnRedux: () => dispatch(MoviesController.updateListOnRedux()),
     clearMovieDetail: () => dispatch(MoviesController.clearMovieDetail()),
   };
 };
