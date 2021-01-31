@@ -1,6 +1,5 @@
 import { MoviesActions } from "../libs/redux/actions";
 import { MoviesServer } from "../server";
-import Store from "../Store";
 import { matchGenreByNameToId } from "../utils/Utils";
 
 const searchByNameOrGenre = (string) => {
@@ -17,7 +16,7 @@ const addDescribedGenresToMovie = async (movies) => {
     movie.describedGenres = [];
     movie.genre_ids.map((genreId) => {
       const findGenre = genres.find((genre) => genre.id === genreId);
-      movie.describedGenres.push(findGenre.name);
+      return movie.describedGenres.push(findGenre.name);
     });
   });
 
@@ -27,10 +26,9 @@ const addDescribedGenresToMovie = async (movies) => {
 export const searchMovie = (value) => (dispatch) => {
   return searchByNameOrGenre(value)
     .then(async (movieResponse) => {
-      console.log("MOVIE RESPOSNE", movieResponse);
       const movies = await addDescribedGenresToMovie(movieResponse.results);
+      localStorage.setItem("moviesList", JSON.stringify(movies));
       dispatch(MoviesActions.saveMoviesList(movies));
-
       return movies;
     })
     .catch((err) => {
@@ -43,30 +41,34 @@ const getGenres = async () => {
     const response = await MoviesServer.fetchGenres();
     return response.genres;
   } catch (err) {
+    console.log("Error", err);
     throw err;
   }
-};
-
-export const saveMoviesOnRedux = (movies) => (dispatch) => {
-  dispatch(MoviesActions.saveMoviesList(movies));
-};
-
-export const paginateMovies = (list) => (dispatch) => {
-  dispatch(MoviesActions.saveMovieByPage(list));
 };
 
 export const selectedMovieCard = (movie) => (dispatch) => {
   return MoviesServer.fetchMovieDetail(movie.id)
     .then(async (res) => {
       return MoviesServer.fetchMovieVideo(movie.id).then((movieResponse) => {
-        res.trailer = `https://www.youtube.com/watch?v=${movieResponse?.results[0]?.key}`;
+        res.trailer = `https://www.youtube.com/embed/${movieResponse?.results[0]?.key}`;
         localStorage.setItem("selectedMovie", JSON.stringify(res));
         dispatch(MoviesActions.saveMovieDetail(res));
       });
     })
     .catch((err) => {
+      console.log("Error", err);
       throw err;
     });
+};
+
+export const updateListOnRedux = () => (dispatch) => {
+  const list = JSON.parse(localStorage.getItem("moviesList"));
+  dispatch(MoviesActions.saveMoviesList(list ? list : []));
+};
+
+export const paginateMovies = (list) => (dispatch) => {
+  localStorage.setItem("currentPage", JSON.stringify(list));
+  dispatch(MoviesActions.saveMovieByPage(list));
 };
 
 export const clearMovieDetail = () => (dispatch) => {
