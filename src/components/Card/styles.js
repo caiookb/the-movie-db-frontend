@@ -1,17 +1,30 @@
-import styled, { css } from "styled-components";
+import styled, { css, keyframes } from "styled-components";
 import { Colors } from "../../utils/Colors";
+
+const fade = keyframes`
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+     margin-top: 50px;
+  }
+`;
 
 export const StyledCard = styled.div`
   display: flex;
-  margin-top: 40px;
   align-self: center;
   flex-direction: row;
   background-color: ${Colors.background};
   height: fit-content;
   min-heigth: 330px;
-  width: 50%;
+  width: 60%;
   position: unset;
   cursor: pointer;
+  animation-name: ${fade};
+  animation-duration: 1.5s;
+  animation-direction: normal;
+  animation-fill-mode: forwards;
 
   ${(props) =>
     props.color &&

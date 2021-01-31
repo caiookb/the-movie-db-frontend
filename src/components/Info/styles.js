@@ -17,7 +17,7 @@ export const StyledTitle = styled.div`
   font-family: "Abel";
   font-size: 20px;
   color: ${Colors.fourth};
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 export const StyledValue = styled.div`

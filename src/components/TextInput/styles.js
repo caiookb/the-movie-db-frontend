@@ -7,7 +7,7 @@ export const StyledInput = styled.input`
   color: ${Colors.primary};
   margin-top: 40px;
   padding: 10px 25px;
-  width: 85%;
+  width: 57%;
   border-radius: 25px;
   border: none;
   font-family: "Abel";
@@ -18,6 +18,9 @@ export const StyledInput = styled.input`
     color: ${Colors.fourth};
   }
 
+  @media (max-width: 500px) {
+    width: 77%;
+  }
   ${(props) =>
     props.color &&
     css`

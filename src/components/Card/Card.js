@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useEffect } from "react";
+import React from "react";
 import { Date, Tag, Text, Title, RoundedData } from "..";
 import { Colors } from "../../utils/Colors";
 import {

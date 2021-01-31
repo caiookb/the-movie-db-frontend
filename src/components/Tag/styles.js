@@ -14,6 +14,12 @@ export const StyledTag = styled.p`
   margin-right: 10px;
   margin-bottom: 20px;
   border: 2px solid ${Colors.fourth};
+  transition: 0.4s;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(70%) contrast(150%);
+  }
 
   ${(props) =>
     props.color &&

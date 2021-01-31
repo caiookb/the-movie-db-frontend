@@ -12,6 +12,12 @@ export const StyledTitle = styled.h1`
     css`
       color: ${props.color};
     `};
+
+  ${(props) =>
+    props.bold &&
+    css`
+      font-weight: bold;
+    `};
 `;
 
 export const StyledDate = styled.p`
@@ -39,7 +45,6 @@ export const StyledText = styled.p`
     css`
       font-size: 20px;
       font-family: "Abel";
-      font-weight: 600;
       color: ${props.color};
     `}
 `;

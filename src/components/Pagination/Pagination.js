@@ -33,10 +33,11 @@ const Pagination = (props) => {
 
   return (
     <StyledPagination>
-      {pages.map((page) => (
+      {pages.map((page, idx) => (
         <StyledPage
           current={page - 1 === currentPage}
           onClick={() => setCurrentPage(page - 1)}
+          key={idx}
         >
           {page}
         </StyledPage>

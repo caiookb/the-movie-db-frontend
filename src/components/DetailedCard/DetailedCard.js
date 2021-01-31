@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Colors } from "../../utils/Colors";
 import {
   Date,
@@ -25,7 +25,6 @@ import {
   StyledRoundedData,
 } from "./styles";
 import moment from "moment";
-import { useSelector } from "react-redux";
 import Spinner from "../Spinner/Spinner";
 
 const DetailedCard = (props) => {
@@ -37,7 +36,7 @@ const DetailedCard = (props) => {
   const status = props.card?.status;
   const original_language = props.card?.original_language;
   const revenue = props.card?.revenue;
-  const video = props.card?.video;
+  const video = props.card?.trailer;
   const budget = props.card?.budget;
   const genres = props.card?.genres;
   const runtime = props.card?.runtime;
@@ -112,8 +111,7 @@ const DetailedCard = (props) => {
           <StyledImage src={poster} />
         </StyledOverview>
       </StyledDetailedCard>
-      <o>{props?.card?.trailer}</o>
-      <Video url={props?.card?.trailer} />
+      <Video url={video} />
     </StyledDetail>
   ) : (
     <Spinner />

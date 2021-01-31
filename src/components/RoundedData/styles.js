@@ -8,6 +8,7 @@ export const StyledRoundedData = styled.div`
   font-family: "Abel";
   font-weight: 300;
   padding: 20px 16px;
+  transition: 1s;
 
   &:before {
     content: "${(props) => props.data} ";
@@ -36,6 +37,6 @@ export const StyledRoundedData = styled.div`
       position: unset;
       font-size: 32px;
       font-weight: 300;
-      padding: 16px 12;px
+      padding: 16px 12px;
     `};
 `;
