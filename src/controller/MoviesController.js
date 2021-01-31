@@ -1,5 +1,6 @@
 import { MoviesActions } from "../libs/redux/actions";
 import { MoviesServer } from "../server";
+import Store from "../Store";
 import { matchGenreByNameToId } from "../utils/Utils";
 
 const searchByNameOrGenre = (string) => {
@@ -9,30 +10,58 @@ const searchByNameOrGenre = (string) => {
     : MoviesServer.fetchMoviesByName(string);
 };
 
-export const searchMovie = (name) => (dispatch) => {
-  return searchByNameOrGenre(name).then((movieResponse) => {
-    getGenres.then((genres) => {
-      movieResponse.results.map((movie) => {
-        const describedGenres = [];
-        movie.genre_ids.map((genreId) => {
-          const findGenre = genres.find((genres) => genres.id === genreId);
-          return findGenre ? describedGenres.push(findGenre.name) : null;
-        });
-        movie.describedGenres = [...new Set(describedGenres)];
-      });
-      dispatch(MoviesActions.saveMovies(movieResponse.results));
+const addDescribedGenresToMovie = async (movies) => {
+  const genres = await getGenres();
+
+  movies.forEach((movie) => {
+    movie.describedGenres = [];
+    movie.genre_ids.map((genreId) => {
+      const findGenre = genres.find((genre) => genre.id === genreId);
+      movie.describedGenres.push(findGenre.name);
     });
   });
+
+  return movies;
 };
 
-const getGenres = MoviesServer.fetchGenres()
-  .then((res) => {
-    return res.genres;
-  })
-  .catch((err) => {
+export const searchMovie = (value) => (dispatch) => {
+  return searchByNameOrGenre(value)
+    .then(async (movieResponse) => {
+      console.log("MOVIE RESPOSNE", movieResponse);
+      const movies = await addDescribedGenresToMovie(movieResponse.results);
+      dispatch(MoviesActions.saveMoviesList(movies));
+
+      return movies;
+    })
+    .catch((err) => {
+      console.log("Error", err);
+    });
+};
+
+const getGenres = async () => {
+  try {
+    const response = await MoviesServer.fetchGenres();
+    return response.genres;
+  } catch (err) {
     throw err;
-  });
+  }
+};
+
+export const saveMoviesOnRedux = (movies) => (dispatch) => {
+  dispatch(MoviesActions.saveMoviesList(movies));
+};
 
 export const paginateMovies = (list) => (dispatch) => {
   dispatch(MoviesActions.saveMovieByPage(list));
+};
+
+export const selectedMovieCard = (movie) => (dispatch) => {
+  return MoviesServer.fetchMovieDetail(movie.id)
+    .then((res) => {
+      localStorage.setItem("selectedMovie", JSON.stringify(res));
+      dispatch(MoviesActions.saveMovieDetail(res));
+    })
+    .catch((err) => {
+      throw err;
+    });
 };

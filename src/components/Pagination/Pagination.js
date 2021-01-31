@@ -1,59 +1,48 @@
 import React, { useEffect, useState } from "react";
-import { connect } from "react-redux";
-
-import { MoviesController } from "../../controller";
 import { StyledPagination, StyledPage } from "./styles";
 
 const Pagination = (props) => {
-  const { list, paginateMovies } = props;
+  const { list, paginateItems } = props;
 
   const [pages, setPages] = useState([]);
   const [items, setItems] = useState([]);
   const [currentPage, setCurrentPage] = useState(0);
 
-  useEffect(() => {
-    setItems(
-      [...Array(Math.ceil(list?.length / 5))].map((_) => list.splice(0, 5))
-    );
+  const data = [...list];
 
-    setPages(Array.from({ length: items.length }, (v, k) => k + 1));
+  const splicePages = [...Array(Math.ceil(data?.length / 5 || 1))].map((_) => {
+    return data?.splice(0, 5);
+  });
+  const pagesLength = Array.from(
+    { length: splicePages?.length || 1 },
+    (v, k) => k + 1
+  );
+
+  useEffect(() => {
+    setItems(splicePages);
+    setPages(pagesLength);
   }, [list]);
 
-  useEffect(
-    () =>
-      items.map((page, idx) =>
-        idx === currentPage ? paginateMovies(page) : null
-      ),
-    [currentPage]
-  );
+  useEffect(() => {
+    items.forEach((page, idx) => {
+      return idx === currentPage ? paginateItems(page) : null;
+    });
+  }, [currentPage]);
+
+  useEffect(() => paginateItems(splicePages[currentPage]), [items]);
 
   return (
     <StyledPagination>
-      {pages.map((page) => {
-        return (
-          <StyledPage
-            current={page - 1 === currentPage}
-            onClick={() => setCurrentPage(page - 1)}
-          >
-            {page}
-          </StyledPage>
-        );
-      })}
+      {pages.map((page) => (
+        <StyledPage
+          current={page - 1 === currentPage}
+          onClick={() => setCurrentPage(page - 1)}
+        >
+          {page}
+        </StyledPage>
+      ))}
     </StyledPagination>
   );
 };
 
-const mapStateToProps = (state) => {
-  const {
-    movies: { moviesList },
-  } = state;
-  return { moviesList };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    paginateMovies: (list) => dispatch(MoviesController.paginateMovies(list)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Pagination);
+export default Pagination;

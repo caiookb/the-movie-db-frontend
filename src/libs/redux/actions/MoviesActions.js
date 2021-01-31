@@ -1,7 +1,7 @@
 import { MoviesTypes } from "../types";
 
-export const saveMovies = (movies) => ({
-  type: MoviesTypes.SAVE_MOVIES,
+export const saveMoviesList = (movies) => ({
+  type: MoviesTypes.SAVE_MOVIES_LIST,
   payload: movies,
 });
 
