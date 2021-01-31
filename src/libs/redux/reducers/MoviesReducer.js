@@ -15,6 +15,8 @@ export default (state = initialState, action) => {
       return { ...state, moviesList: payload };
     case MoviesTypes.SAVE_MOVIE_DETAIL:
       return { ...state, selectedMovie: payload };
+    case MoviesTypes.CLEAR_MOVIE_DETAIL:
+      return { ...state, selectedMovie: {} };
     case MoviesTypes.CLEAN_MOVIES:
       return { ...state };
     default:

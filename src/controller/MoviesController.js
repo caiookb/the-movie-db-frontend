@@ -57,11 +57,18 @@ export const paginateMovies = (list) => (dispatch) => {
 
 export const selectedMovieCard = (movie) => (dispatch) => {
   return MoviesServer.fetchMovieDetail(movie.id)
-    .then((res) => {
-      localStorage.setItem("selectedMovie", JSON.stringify(res));
-      dispatch(MoviesActions.saveMovieDetail(res));
+    .then(async (res) => {
+      return MoviesServer.fetchMovieVideo(movie.id).then((movieResponse) => {
+        res.trailer = `https://www.youtube.com/watch?v=${movieResponse?.results[0]?.key}`;
+        localStorage.setItem("selectedMovie", JSON.stringify(res));
+        dispatch(MoviesActions.saveMovieDetail(res));
+      });
     })
     .catch((err) => {
       throw err;
     });
+};
+
+export const clearMovieDetail = () => (dispatch) => {
+  dispatch(MoviesActions.clearMovieDetail());
 };

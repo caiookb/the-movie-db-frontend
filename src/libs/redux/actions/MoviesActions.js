@@ -10,6 +10,11 @@ export const saveMovieDetail = (movie) => ({
   payload: movie,
 });
 
+export const clearMovieDetail = () => ({
+  type: MoviesTypes.CLEAR_MOVIE_DETAIL,
+  payload: {},
+});
+
 export const saveMovieByPage = (list) => ({
   type: MoviesTypes.SAVE_MOVIES_BY_PAGE,
   payload: list,
@@ -17,5 +22,5 @@ export const saveMovieByPage = (list) => ({
 
 export const cleanMovies = () => ({
   type: MoviesTypes.CLEAN_MOVIES,
-  payload: {},
+  payload: [],
 });

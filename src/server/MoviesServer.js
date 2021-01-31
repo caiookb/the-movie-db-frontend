@@ -21,6 +21,13 @@ export const fetchMovieDetail = (id) => {
   });
 };
 
+export const fetchMovieVideo = (id) => {
+  return fetchServer({
+    method: "GET",
+    path: ["movie", `${id}`, "videos?"],
+  });
+};
+
 export const fetchGenres = () => {
   return fetchServer({
     method: "GET",
