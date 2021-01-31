@@ -1,9 +1,12 @@
 import React from "react";
-import { StyledVideo } from "./styles";
+import { StyledVideo, Frame } from "./styles";
 
 const Video = ({ url }) => {
-  console.log("???????", url);
-  return <iframe src={url} />;
+  return (
+    <StyledVideo>
+      <Frame type="text/html" src={url} frameBorder="0" />
+    </StyledVideo>
+  );
 };
 
 export default Video;
