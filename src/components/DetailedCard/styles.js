@@ -1,6 +1,12 @@
 import styled, { css } from "styled-components";
 import { Colors } from "../../utils/Colors";
 
+export const StyledDetail = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
 export const StyledDetailedCard = styled.div`
   display: flex;
   margin-top: 40px;
@@ -8,7 +14,7 @@ export const StyledDetailedCard = styled.div`
   flex-direction: column;
   background-color: ${Colors.background};
   height: fit-content;
-  width: 95%;
+  width: 50%;
   position: unset;
 
   @media (max-width: 768px) {

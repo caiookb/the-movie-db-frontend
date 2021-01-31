@@ -1,11 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { Colors } from "../../utils/Colors";
-import { Date, RoundedData, Title, Text, Info, Tag } from "../../components";
 import {
-  StyledDetails,
-  StyledApproval,
+  Date,
+  RoundedData,
+  Title,
+  Text,
+  Info,
+  Tag,
+  Video,
+} from "../../components";
+import {
   StyledInfoTitle,
   StyledDate,
+  StyledDetail,
   StyledTitle,
   StyledDetailedCard,
   StyledTopic,
@@ -18,24 +25,22 @@ import {
   StyledRoundedData,
 } from "./styles";
 import moment from "moment";
+import { useSelector } from "react-redux";
+import Spinner from "../Spinner/Spinner";
 
 const DetailedCard = (props) => {
-  const selectedMovies = JSON.parse(localStorage.getItem("selectedMovie"));
-
-  const {
-    title,
-    vote_average,
-    release_date,
-    poster_path,
-    overview,
-    status,
-    original_language,
-    revenue,
-    video,
-    budget,
-    genres,
-    runtime,
-  } = selectedMovies;
+  const title = props.card?.title;
+  const vote_average = props.card?.vote_average;
+  const release_date = props.card?.release_date;
+  const poster_path = props.card?.poster_path;
+  const overview = props.card?.overview;
+  const status = props.card?.status;
+  const original_language = props.card?.original_language;
+  const revenue = props.card?.revenue;
+  const video = props.card?.video;
+  const budget = props.card?.budget;
+  const genres = props.card?.genres;
+  const runtime = props.card?.runtime;
 
   const getCurrency = (value) =>
     new Intl.NumberFormat("en-US", {
@@ -45,7 +50,7 @@ const DetailedCard = (props) => {
 
   const specificInfos = [
     { title: "Situação", value: status },
-    { title: "Idioma", value: original_language.toUpperCase() },
+    { title: "Idioma", value: original_language?.toUpperCase() },
     {
       title: "Duração",
       value: Math.floor(runtime / 60) + "h " + (runtime % 60) + "min",
@@ -60,52 +65,58 @@ const DetailedCard = (props) => {
 
   const poster = `https://image.tmdb.org/t/p/w500${poster_path}`;
 
-  return (
-    <StyledDetailedCard url={poster}>
-      <StyledInfoTitle>
-        <StyledTitle>
-          <Title title={title} color={Colors.primary} />
-        </StyledTitle>
-        <StyledDate>
-          <Date date={moment(release_date).format("DD/MM/YYYY")} />
-        </StyledDate>
-      </StyledInfoTitle>
-      <StyledOverview>
-        <StyledInfo>
-          <StyledTopic>
-            <StyledTopicTitle>
-              <Text text={"Sinopse"} color={Colors.fourth} topic={true} />
-            </StyledTopicTitle>
-            <Text text={overview} color={Colors.text2} />
-          </StyledTopic>
-          <StyledTopic>
-            <StyledTopicTitle>
-              <Text text={"Informações"} color={Colors.fourth} topic={true} />
-            </StyledTopicTitle>
+  return title ? (
+    <StyledDetail>
+      <StyledDetailedCard url={poster}>
+        <StyledInfoTitle>
+          <StyledTitle>
+            <Title title={title} color={Colors.primary} />
+          </StyledTitle>
+          <StyledDate>
+            <Date date={moment(release_date).format("DD/MM/YYYY")} />
+          </StyledDate>
+        </StyledInfoTitle>
+        <StyledOverview>
+          <StyledInfo>
+            <StyledTopic>
+              <StyledTopicTitle>
+                <Text text={"Sinopse"} color={Colors.fourth} topic={true} />
+              </StyledTopicTitle>
+              <Text text={overview} color={Colors.text2} />
+            </StyledTopic>
+            <StyledTopic>
+              <StyledTopicTitle>
+                <Text text={"Informações"} color={Colors.fourth} topic={true} />
+              </StyledTopicTitle>
+              <StyledRow>
+                {specificInfos?.map((info) => (
+                  <Info title={info.title} value={info.value} />
+                ))}
+              </StyledRow>
+            </StyledTopic>
             <StyledRow>
-              {specificInfos?.map((info) => (
-                <Info title={info.title} value={info.value} />
-              ))}
+              <StyledTags>
+                {genres?.map((genre) => (
+                  <Tag tag={genre.name} />
+                ))}
+              </StyledTags>
+              <StyledRoundedData>
+                <RoundedData
+                  size={"lg"}
+                  data={`${vote_average * 10}%`}
+                  rating={true}
+                />
+              </StyledRoundedData>
             </StyledRow>
-          </StyledTopic>
-          <StyledRow>
-            <StyledTags>
-              {genres.map((genre) => (
-                <Tag tag={genre.name} />
-              ))}
-            </StyledTags>
-            <StyledRoundedData>
-              <RoundedData
-                size={"lg"}
-                data={`${vote_average * 10}%`}
-                rating={true}
-              />
-            </StyledRoundedData>
-          </StyledRow>
-        </StyledInfo>
-        <StyledImage src={poster} />
-      </StyledOverview>
-    </StyledDetailedCard>
+          </StyledInfo>
+          <StyledImage src={poster} />
+        </StyledOverview>
+      </StyledDetailedCard>
+      <o>{props?.card?.trailer}</o>
+      <Video url={props?.card?.trailer} />
+    </StyledDetail>
+  ) : (
+    <Spinner />
   );
 };
 
