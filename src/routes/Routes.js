@@ -3,5 +3,5 @@ import Details from "../views/Details/Details";
 
 export const routes = [
   { path: "/main", component: Main, isPrivate: false },
-  { path: "/detaile/:id", component: Details, isPrivate: false },
+  { path: "/movie/:id", component: Details, isPrivate: false },
 ];
