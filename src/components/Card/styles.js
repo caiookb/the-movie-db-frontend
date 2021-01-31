@@ -11,6 +11,7 @@ export const StyledCard = styled.div`
   min-heigth: 330px;
   width: 50%;
   position: unset;
+  cursor: pointer;
 
   ${(props) =>
     props.color &&
