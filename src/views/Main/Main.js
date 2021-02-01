@@ -43,7 +43,7 @@ const Main = (props) => {
       <Header title={"Movies"} />
 
       <TextInput
-        placeholder={"Busque um filme por nome, ano ou gênero..."}
+        placeholder={"Busque um filme por nome ou gênero..."}
         onChange={(e) => {
           setFetching(true);
           handleChange(e.target.value);
